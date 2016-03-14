@@ -1,4 +1,3 @@
-__author__ = 'alvin'
 import matplotlib.pyplot as plt
 import gzip
 import cPickle
@@ -11,11 +10,5 @@ train_set = train[0]
 train_labels = train[1]
 
 for vec in train_set:
-    print vec.shape
-    raw_input()
-    vec = np.reshape(vec, (28, 28))
-    print vec
-    print 'shape' + str(np.shape(vec))
-    plt.imshow(vec)
+    plt.imshow(vec.reshape((28, 28)), interpolation='nearest')
     plt.show()
-    raw_input()
