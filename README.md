@@ -1,3 +1,3 @@
-# NN-test
+# ML_tests
 
-Learning git branching and generic ML exercises
+Learning git and scripting some ML exercises
