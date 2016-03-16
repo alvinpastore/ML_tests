@@ -4,13 +4,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def plot_position(environment,current_point):
-    plt.figure()
-    plt.plot(np.arange(len(environment)), np.zeros(len(environment))+0.5, 'bo')
-    plt.axis([-0.5, len(environment) - 0.5, 0, 1])
-    plt.plot(current_point, 0.4, 'rx')
-    plt.title('Current position: ' + str(current_point))
-    plt.show()
+def plot_position(environment, current_point, winner_point, ax, ep):
+    ax.clear()
+    ax.scatter(np.arange(len(environment)), np.zeros(len(environment))+0.5, s=1000, c='b', marker='o', alpha=0.2)
+    ax.scatter(winner_point, 0.5, s=1000, c='g', marker='o', alpha=0.2)
+    ax.scatter(current_point, 0.5, s=100, c='r', marker='x')
+    ax.set_xlim([-0.5, len(environment) - 0.5, ])
+    ax.set_ylim([0.4, 0.6])
+
+    ax.set_title('Episode: ' + str(ep))
+    ax.get_xaxis().set_ticks([])
+    ax.get_yaxis().set_ticks([])
+    plt.draw()
+    plt.pause(0.0001)
 
 
 def game(environment, episodes, alpha, gamma, epsilon, verbose, plot):
@@ -18,13 +24,18 @@ def game(environment, episodes, alpha, gamma, epsilon, verbose, plot):
     # initialise q-values
     Q = [[0 for s in range(2)] for a in range(len(environment))]
 
+    if plot:
+        fig = plt.figure(figsize=(len(environment), 3))
+        ax = fig.add_subplot(111)
+        plt.show()
+
     for episode in range(episodes):
 
         # start episode at midpoint
         current_point = int(np.floor(len(environment)/2))
 
         if plot:
-            plot_position(environment, current_point)
+            plot_position(environment, current_point,np.argmax(environment), ax, episode)
 
         # episode terminates when state 0 or 6 are reached
         while 0 < current_point < len(environment)-1:
@@ -51,12 +62,11 @@ def game(environment, episodes, alpha, gamma, epsilon, verbose, plot):
             current_point = next_point
 
             if plot:
-                plot_position(environment, current_point)
+                plot_position(environment, current_point,np.argmax(environment), ax, episode)
 
         if verbose:
             Q_string = [['{0:.4g}'.format(flt) for flt in sublist] for sublist in Q]
             print('Episode: {0} \t Qs: {1}'.format(episode, Q_string))
-
 
 
 def main():
@@ -112,6 +122,9 @@ def main():
     game(env, n_episodes, a, g, e, options.v, options.p)
 
 
+plt.ion()
+
 if __name__ == '__main__':
+    plt.close('all')
     main()
 
