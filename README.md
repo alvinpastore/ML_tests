@@ -1,3 +1,3 @@
 # NN-test
 
-Learning Git branching and simple NN exercise
+Learning git branching and generic ML exercises
