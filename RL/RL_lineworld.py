@@ -70,7 +70,7 @@ def game(environment, episodes, alpha, gamma, epsilon, verbose, plot):
 
 
 def main():
-    op = optparse.OptionParser("usage: %prog [options] n_states w_state n_episodes \n"
+    op = optparse.OptionParser("usage: %prog [options] n_states w_state n_episodes alpha gamma epsilon\n"
                                "n_states    = number of states, (e.g. minimum setup: [0,1,2] = 3 states)\n"
                                "w_state     = winner state (right or left, i.e. the end of lineworld)\n"
                                "n_episodes  = number of episodes of training\n"
